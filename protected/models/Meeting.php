@@ -84,7 +84,7 @@ class Meeting extends CActiveRecord
         }
 
         if (!$result)
-            $this->addError($attribute, 'У вас у назначено на эту дату.');
+            $this->addError($attribute, 'У вас уже назначено на эту дату.');
     }
 
 
