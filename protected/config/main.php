@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 $mainConfig = array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Scheduler',
+	'name'=>'Calendar',
     'defaultController' => 'meeting',
 
 	// preloading 'log' component
