@@ -8,8 +8,8 @@
  * @property string $title
  * @property integer $type
  * @property string $place
- * @property integer $started_at
- * @property integer $finished_at
+ * @property integer $start
+ * @property integer $end
  */
 class Meeting extends CActiveRecord
 {
@@ -40,14 +40,14 @@ class Meeting extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('title, started_at', 'required'),
+			array('title, start', 'required'),
             array('title', 'match', 'pattern' => '/^[^(\,|\.|\:|\;|\!|\?|\'|\"|\@|\&|\%|\#|\*|\)|\(|\]|\[|\{|\}|\-|\+|\~|\\|\/)](.*)/', 'message' => 'Punctuation prohibited'),
             array('title', 'length', 'min' => 3, 'max' => 200),
-			array('type, started_at, finished_at', 'numerical', 'integerOnly'=>true),
+			array('type, start, end', 'numerical', 'integerOnly'=>true),
             array('type', 'exist', 'allowEmpty' => true /* Default 0 */, 'className' => 'MeetingType', 'attributeName' => 'id'),
             array('type', 'checkForIntersections', 'on' => self::SCENARIO_UNCONFIRMED),
 			array('place', 'match', 'pattern' => '/^[A-я\s]+$/i', 'allowEmpty' => true),
-			array('id, title, type, place, started_at, finished_at', 'safe', 'on'=>'search'),
+			array('id, title, type, place, start, end', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,15 +67,15 @@ class Meeting extends CActiveRecord
         $result = true;
         foreach ($meetings as $meeting)
         {
-            if (($this->started_at > $meeting->started_at) && ($this->started_at < $meeting->finished_at))
+            if (($this->start > $meeting->start) && ($this->start < $meeting->end))
             {
                 $result = false; break;
             }
-            elseif (($this->finished_at > $meeting->started_at) && ($this->finished_at < $meeting->finished_at))
+            elseif (($this->end > $meeting->start) && ($this->end < $meeting->end))
             {
                 $result = false; break;
             }
-            elseif (($this->finished_at == $meeting->started_at) && ($this->finished_at == $meeting->finished_at))
+            elseif (($this->end == $meeting->start) && ($this->end == $meeting->end))
             {
                 $result = false; break;
             }
@@ -109,8 +109,8 @@ class Meeting extends CActiveRecord
 			'title' => 'Title',
 			'type' => 'Type',
 			'place' => 'Place',
-			'started_at' => 'Started At',
-			'finished_at' => 'Finished At',
+			'start' => 'Started At',
+			'end' => 'Finished At',
 		);
 	}
 
@@ -118,7 +118,7 @@ class Meeting extends CActiveRecord
     {
         return array(
             'future' => array(
-                'condition' => '`t`.`started_at` >= ' . time(),
+                'condition' => '`t`.`start` >= ' . time(),
                 'limit' => 10
             ),
         );
@@ -132,8 +132,8 @@ class Meeting extends CActiveRecord
     public static function getByDate($start, $end)
     {
         $criteria = new CDbCriteria();
-        $criteria->addCondition('`t`.`started_at` >= :start');
-        $criteria->addCondition('`t`.`finished_at` <= :end');
+        $criteria->addCondition('`t`.`start` >= :start');
+        $criteria->addCondition('`t`.`end` <= :end');
         $criteria->params = array(
             ':start' => $start,
             ':end' => $end,
@@ -151,8 +151,8 @@ class Meeting extends CActiveRecord
                 'title' => $model->title,
                 'type' => $model->type,
                 'place' => $model->place,
-                'start' => $model->started_at,
-                'end' => $model->finished_at
+                'start' => $model->start,
+                'end' => $model->end
             );
         }
 

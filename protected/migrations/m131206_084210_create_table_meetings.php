@@ -9,8 +9,8 @@ class m131206_084210_create_table_meetings extends CDbMigration
             'title' => 'varchar(200) NOT NULL',
             'type' => 'int(11) NOT NULL DEFAULT 0',
             'place' => 'text DEFAULT NULL',
-            'started_at' => 'int(11) NOT NULL',
-            'finished_at' => 'int(11) NOT NULL',
+            'start' => 'int(11) NOT NULL',
+            'end' => 'int(11) NOT NULL',
         ), 'ENGINE=InnoDB');
 	}
 
