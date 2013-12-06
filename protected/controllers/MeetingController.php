@@ -75,11 +75,11 @@ class MeetingController extends Controller
     {
         $model->setScenario((isset($_POST['confirmed']) && $_POST['confirmed'] === 'true') ? '' : Meeting::SCENARIO_UNCONFIRMED);
 
-        $model->title       = $_POST['title'];
-        $model->place       = $_POST['place'];
-        $model->started_at  = $_POST['start'];
-        $model->finished_at = $_POST['end'];
-        $model->type        = isset($_POST['type']) ? $_POST['type'] : Meeting::TYPE_UNDEFINED;
+        $model->title = $_POST['title'];
+        $model->place = $_POST['place'];
+        $model->start = $_POST['start'];
+        $model->end   = $_POST['end'];
+        $model->type  = isset($_POST['type']) ? $_POST['type'] : Meeting::TYPE_UNDEFINED;
 
         $this->responseJson(array(
             'result' => $model->save(),
