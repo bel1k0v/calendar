@@ -15,8 +15,8 @@ class m131206_085220_insert_meeting_types extends CDbMigration
         $this->dbConnection->createCommand($sql)->execute();
 	}
 
-	public function safeDown()
+	public function down()
 	{
-        $this->dbConnection->createCommand('TRUNCATE {{meeting_types}}');
+        $this->dbConnection->createCommand('TRUNCATE {{meeting_types}}')->execute();
 	}
 }
