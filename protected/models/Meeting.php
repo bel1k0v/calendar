@@ -145,16 +145,7 @@ class Meeting extends CActiveRecord
             return $result;
 
         foreach ($models as $model)
-        {
-            $result[] = array(
-                'id' => $model->id,
-                'title' => $model->title,
-                'type' => $model->type,
-                'place' => $model->place,
-                'start' => $model->start,
-                'end' => $model->end
-            );
-        }
+            $result[] = $model->getAttributes();
 
         return $result;
     }
