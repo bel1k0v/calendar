@@ -4,3 +4,5 @@ index-test.php
 /assets/
 themes/
 protected/runtime/
+protected/config/console.dev.php
+protected/config/main.dev.php

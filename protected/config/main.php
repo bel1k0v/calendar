@@ -5,12 +5,13 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-return array(
+$mainConfig = array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Scheduler',
     'defaultController' => 'meeting',
+
 	// preloading 'log' component
-	'preload'=>array('log'),
+	//'preload'=>array('log'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -19,12 +20,6 @@ return array(
 	),
 
 	'modules'=>array(
-		// uncomment the following to enable the Gii tool
-		'gii'=>array(
-			'class'=>'system.gii.GiiModule',
-			'password'=>'123',
-			'ipFilters'=>array('127.0.0.1','::1'),
-		),
 	),
 
 	// application components
@@ -44,15 +39,14 @@ return array(
 			),
 		),
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=scheduler_test',
+			'connectionString' => 'mysql:host=localhost;dbname=test',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'kjgfcnm',
+			'password' => '',
 			'charset' => 'utf8',
             'tablePrefix' => 'scheduler_',
         ),
 		'errorHandler'=>array(
-
 			'errorAction'=>'site/error',
 		),
 		'log'=>array(
@@ -70,3 +64,44 @@ return array(
 		'adminEmail'=>'webmaster@example.com',
 	),
 );
+
+/**
+ * Dev config example
+<?php
+return CMap::mergeArray($mainConfig, array(
+    'modules' => array(
+        'gii'=>array(
+            'class'=>'system.gii.GiiModule',
+            'password'=>'123',
+        ),
+    ),
+    'components'=>array(
+        'db'=>array(
+            'connectionString' => 'mysql:host=localhost;dbname=yourdatabasename',
+            'emulatePrepare' => true,
+            'username' => 'yourdatabaseuser',
+            'password' => 'yoursecretpassword',
+            'charset' => 'utf8',
+            'tablePrefix' => 'scheduler_',
+        ),
+        'log'=>array(
+        'class'=>'CLogRouter',
+            'routes'=>array(
+                // Import an extension to profile queries, unfortunately doesn't work with ajax
+                //array(
+                //    'class'=>'ext.dbProfiler.DbProfileLogRoute',
+                //    'countLimit' => 1, // How many times the same query should be executed to be considered inefficient
+                //    'slowQueryMin' => 0.01, // Minimum time for the query to be slow
+                //),
+            ),
+        ),
+    ),
+));
+?>
+ */
+
+$devConfig = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'main.dev.php';
+if (file_exists($devConfig))
+    $mainConfig = require_once $devConfig;
+
+return $mainConfig;
