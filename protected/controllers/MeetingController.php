@@ -7,6 +7,11 @@ class MeetingController extends Controller
         $this->render('index');
     }
 
+    /**
+     * @param integer $start
+     * @param integer $end
+     * @param integer $_
+     */
     public function actionAll($start, $end, $_)
     {
         $result = array();
@@ -26,6 +31,9 @@ class MeetingController extends Controller
             $this->show503();
     }
 
+    /**
+     * @param integer $id
+     */
     public function actionUpdate($id)
     {
         // Ajax
@@ -35,6 +43,9 @@ class MeetingController extends Controller
             $this->show503();
     }
 
+    /**
+     * @param integer $id
+     */
     public function actionDelete($id)
     {
         // Ajax
@@ -62,15 +73,18 @@ class MeetingController extends Controller
         $this->responseXML($xml->asXML());
     }
 
+    /**
+     * @param integer $id
+     * @return array|CActiveRecord|mixed|null
+     */
     protected function loadModel($id)
     {
-        $model = Meeting::model()->findByPk($id);
-        if (null === $model)
-            $this->show404();
-
-        return $model;
+        return Meeting::model()->findByPkOr404($id);
     }
 
+    /**
+     * @param Meeting $model
+     */
     protected function saveModelPOST(Meeting $model)
     {
         $model->setScenario((isset($_POST['confirmed']) && $_POST['confirmed'] === 'true') ? '' : Meeting::SCENARIO_UNCONFIRMED);
@@ -79,7 +93,7 @@ class MeetingController extends Controller
         $model->place = $_POST['place'];
         $model->start = $_POST['start'];
         $model->end   = $_POST['end'];
-        $model->type  = isset($_POST['type']) ? $_POST['type'] : Meeting::TYPE_UNDEFINED;
+        $model->type  = $_POST['type'];
 
         $this->responseJson(array(
             'result' => $model->save(),

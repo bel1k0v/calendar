@@ -11,10 +11,9 @@
  * @property integer $start
  * @property integer $end
  */
-class Meeting extends CActiveRecord
+class Meeting extends ActiveRecord
 {
     const SCENARIO_UNCONFIRMED = 'unconfirmed';
-    const TYPE_UNDEFINED = 0;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -44,7 +43,7 @@ class Meeting extends CActiveRecord
             array('title', 'match', 'pattern' => '/^[^(\,|\.|\:|\;|\!|\?|\'|\"|\@|\&|\%|\#|\*|\)|\(|\]|\[|\{|\}|\-|\+|\~|\\|\/)](.*)/', 'message' => 'Punctuation prohibited'),
             array('title', 'length', 'min' => 3, 'max' => 200),
 			array('type, start, end', 'numerical', 'integerOnly'=>true),
-            array('type', 'exist', 'allowEmpty' => true /* Default 0 */, 'className' => 'MeetingType', 'attributeName' => 'id'),
+            array('type', 'exist', 'className' => 'MeetingType', 'attributeName' => 'id'),
             array('type', 'checkForIntersections', 'on' => self::SCENARIO_UNCONFIRMED),
 			array('place', 'match', 'pattern' => '/^[A-я\s]+$/i', 'allowEmpty' => true),
 			array('id, title, type, place, start, end', 'safe', 'on'=>'search'),
@@ -52,7 +51,7 @@ class Meeting extends CActiveRecord
 	}
 
     /**
-     * @param string$attribute
+     * @param string $attribute
      * @param array $params
      */
     public function checkForIntersections($attribute, $params)

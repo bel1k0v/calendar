@@ -193,7 +193,7 @@ $(document).ready(function() {
                         place: place,
                         start: start,
                         end: end,
-                        confirmed: true
+                        confirmed: 'true'
                       },
                       dataType: 'json',
                       success: function(data) {
