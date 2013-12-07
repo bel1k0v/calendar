@@ -61,7 +61,7 @@ $mainConfig = array(
 	),
 
 	'params'=>array(
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'dmitrijbelikov@gmail.com',
 	),
 );
 

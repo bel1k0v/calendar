@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class MeetingController
+ */
 class MeetingController extends Controller
 {
     public function actionIndex()
@@ -83,11 +86,14 @@ class MeetingController extends Controller
     }
 
     /**
+     * Use with ajax
      * @param Meeting $model
+     * @return string
      */
     protected function saveModelPOST(Meeting $model)
     {
-        $model->setScenario((isset($_POST['confirmed']) && $_POST['confirmed'] === 'true') ? '' : Meeting::SCENARIO_UNCONFIRMED);
+        if (!(isset($_POST['confirmed']) && $_POST['confirmed'] === 'true'))
+            $model->setScenario(Meeting::SCENARIO_UNCONFIRMED);
 
         $model->title = $_POST['title'];
         $model->place = $_POST['place'];
@@ -96,10 +102,10 @@ class MeetingController extends Controller
         $model->type  = $_POST['type'];
 
         $this->responseJson(array(
-            'result' => $model->save(),
+            'result'          => $model->save(),
             'modelAttributes' => $model->getAttributes(),
-            'modelErrors' => $model->getErrors(),
-            'notConfirmed' => ($model->getScenario() === Meeting::SCENARIO_UNCONFIRMED)
+            'modelErrors'     => $model->getErrors(),
+            'notConfirmed'    => ($model->getScenario() === Meeting::SCENARIO_UNCONFIRMED)
         ));
 
         Yii::app()->end();
