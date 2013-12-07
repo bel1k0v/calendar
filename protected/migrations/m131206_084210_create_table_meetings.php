@@ -7,7 +7,7 @@ class m131206_084210_create_table_meetings extends CDbMigration
         $this->createTable('{{meetings}}', array(
             'id' => 'pk',
             'title' => 'varchar(200) NOT NULL',
-            'type' => 'int(11) NOT NULL DEFAULT 0',
+            'type' => 'int(11) NOT NULL',
             'place' => 'text DEFAULT NULL',
             'start' => 'int(11) NOT NULL',
             'end' => 'int(11) NOT NULL',
