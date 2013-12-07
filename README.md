@@ -15,7 +15,7 @@ Install:
      and don't forget about console.dev.php
   7. cd ./protected
   8. ./yiic migrate to apply migrations
-  9. or and of course don't forget about your apache or nginx config
+  9. and of course don't forget about your apache or nginx config
   10. Have fun!
 
 Future improvements:
