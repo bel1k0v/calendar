@@ -115,7 +115,8 @@ $(document).ready(function() {
                 }
               }
             });
-          }
+          } else
+            alert('Пожалуйста, введите название и укажите тип.');
         }
       }
     });
@@ -229,7 +230,7 @@ $(document).ready(function() {
               }
             });
           } else
-            alert('Please enter title and type both.');
+            alert('Пожалуйста, введите название и укажите тип.');
         }
       }
     });

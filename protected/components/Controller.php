@@ -43,6 +43,24 @@ class Controller extends CController
     }
 
     /**
+     * Additional checking for ajax requests
+     * @param integer $_
+     */
+    public function checkAjaxJsTimestamp($_)
+    {
+        $ajaxTs = (int) ceil($_ / 1000);
+        switch ($ajaxTs)
+        {
+            case time():
+            case time() + 1:
+            case time() - 1:
+                break;
+            default:
+                return;
+        }
+    }
+
+    /**
      * @param string $message
      * @throws CHttpException
      */

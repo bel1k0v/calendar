@@ -17,12 +17,19 @@ class MeetingController extends Controller
      */
     public function actionAll($start, $end, $_)
     {
-        $result = array();
-        if (is_numeric($start) && is_numeric($end))
-            $result = Meeting::getByDate($start, $end);
+        if (Yii::app()->request->isAjaxRequest)
+        {
+            $this->checkAjaxJsTimestamp($_);
 
-        $this->responseJson($result);
-        Yii::app()->end();
+            $result = array();
+            if (is_numeric($start) && is_numeric($end))
+                $result = Meeting::getByDate($start, $end);
+
+            $this->responseJson($result);
+            Yii::app()->end();
+        }
+        else
+            $this->show503();
     }
 
     public function actionCreate()
