@@ -19,7 +19,7 @@ class MeetingController extends Controller
     {
         if (Yii::app()->request->isAjaxRequest)
         {
-            $this->checkAjaxJsTimestamp($_);
+            //$this->checkAjaxJsTimestamp($_);
 
             $result = array();
             if (is_numeric($start) && is_numeric($end))
