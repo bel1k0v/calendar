@@ -54,9 +54,9 @@ class Controller extends CController
             case time():
             case time() + 1:
             case time() - 1:
-                break;
+                return ;
             default:
-                return;
+                $this->show503();
         }
     }
 
