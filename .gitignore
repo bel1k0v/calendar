@@ -3,6 +3,7 @@
 index-test.php
 themes/
 vendor/
+logs/
 composer.lock
 protected/config/console.dev.php
 protected/config/main.dev.php
