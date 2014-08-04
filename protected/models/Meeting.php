@@ -15,6 +15,17 @@ class Meeting extends ActiveRecord
 {
     const SCENARIO_UNCONFIRMED = 'unconfirmed';
 
+    const TYPE_DEFAULT = 0;
+    const TYPE_NOTE = 1;
+    const TYPE_REMINDER = 2;
+
+    public static $types = array(
+        self::TYPE_DEFAULT => self::TYPE_DEFAULT,
+        self::TYPE_NOTE => self::TYPE_NOTE,
+        self::TYPE_REMINDER => self::TYPE_REMINDER
+    );
+
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -43,8 +54,8 @@ class Meeting extends ActiveRecord
             array('title', 'match', 'pattern' => '/^[^(\,|\.|\:|\;|\!|\?|\'|\"|\@|\&|\%|\#|\*|\)|\(|\]|\[|\{|\}|\-|\+|\~|\\|\/)](.*)/', 'message' => 'Punctuation prohibited'),
             array('title', 'length', 'min' => 3, 'max' => 200),
 			array('type, start, end', 'numerical', 'integerOnly'=>true),
-            array('type', 'exist', 'className' => 'MeetingType', 'attributeName' => 'id'),
-            array('type', 'checkForIntersections', 'on' => self::SCENARIO_UNCONFIRMED),
+            array('type', 'in', 'range' => self::$types),
+            //array('type', 'checkForIntersections', 'on' => self::SCENARIO_UNCONFIRMED),
 			array('place', 'match', 'pattern' => '/^[A-я\s]+$/i', 'allowEmpty' => true),
 			array('id, title, type, place, start, end', 'safe', 'on'=>'search'),
 		);

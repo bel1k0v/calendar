@@ -1,10 +1,8 @@
 .idea
+.DS_Store
 index-test.php
-/logs/
-/assets/
 themes/
 vendor/
 composer.lock
-protected/runtime/
 protected/config/console.dev.php
 protected/config/main.dev.php

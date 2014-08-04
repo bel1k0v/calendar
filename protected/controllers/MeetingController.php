@@ -7,21 +7,20 @@ class MeetingController extends Controller
 {
     public function actionIndex()
     {
+        $this->layout = 'clear';
         $this->render('index');
     }
 
     /**
      * @param integer $start
      * @param integer $end
-     * @param integer $_
      */
-    public function actionAll($start, $end, $_)
+    public function actionAll($start, $end)
     {
         if (Yii::app()->request->isAjaxRequest)
         {
-            //$this->checkAjaxJsTimestamp($_);
-
             $result = array();
+
             if (is_numeric($start) && is_numeric($end))
                 $result = Meeting::getByDate($start, $end);
 
@@ -102,11 +101,7 @@ class MeetingController extends Controller
         if (!(isset($_POST['confirmed']) && $_POST['confirmed'] === 'true'))
             $model->setScenario(Meeting::SCENARIO_UNCONFIRMED);
 
-        $model->title = $_POST['title'];
-        $model->place = $_POST['place'];
-        $model->start = $_POST['start'];
-        $model->end   = $_POST['end'];
-        $model->type  = $_POST['type'];
+        $model->setAttributes($_POST);
 
         $this->responseJson(array(
             'result'          => $model->save(),
