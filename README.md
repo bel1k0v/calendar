@@ -2,5 +2,5 @@ Calendar
 ========
 
 ***********
-* EXAMPLE *
+EXAMPLE
 ***********
